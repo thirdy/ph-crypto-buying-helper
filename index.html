@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+	<!-- SOURCE: https://github.com/chriszarate/bookmarkleter/blob/ba8121ec547e4cc6511f0b2ed469f457485f3e92/index.html -->
+	<head>
+		<title>Bookmarklet Maker with jQuery option</title>
+		<meta name="description" content="Enter JavaScript to generate a standard or jQuery bookmarklet. Also known as a bookmarklet builder, creator, generator, or compiler">
+		<meta charset="utf-8">
+		<style>
+			body { background:#fff; font-family:Arial; margin:0; padding:0; }
+			#contents { width:80%; margin:1em auto; }
+			h1,h2,h3,h4{margin:.5em 0}
+			h4{margin:0 0 .5em}
+			form{margin:0 0 3em}
+			fieldset{margin:0;padding:0;border:none}
+			textarea{width:100%;height:15em;font-family:monospace;}
+			input[type=checkbox]{vertical-align:middle}
+			#InputFields{background:#ccc;padding:.5em}
+			#OutputFields{clear:left;background:#cfc;padding:.5em}
+			#Labels{padding:0}
+			#InputLabel{float:left;background:#ccc;padding:.25em .5em}
+			#OutputLabel{float:right;background:#cfc;padding:.25em .5em}
+			#OutputLink{font-size:.9em}
+			#ErrorOutput{overflow:hidden;padding:.25em .5em;text-align:center;background-color:#fcc;color:red}
+			.options{margin:1em 0;padding:1em;border:solid 1px #ccc}
+			.disabled{color:#9c9}
+			.disabled a{color:#9c9;cursor:default}
+			.pointer{cursor:pointer}
+		</style>
+	</head>
+
+	<body ng-app="bookmarkleter">
+	
+<div style="text-align:right; border-bottom: 1px solid #aaaaaa; padding:2px; font-size:12px; font-weight:bold; background-color:#eeeeee">
+<a href="/">Bookmarklets.org</a> &nbsp;
+</div><div style="height:4px"></div>
+	<div id=contents>
+	
+		<header>
+			<h2>Bookmarklet Maker</h2>
+		</header>
+
+		<p>Enter your JavaScript below to generate a standard or jQuery <a href="/">bookmarklet</a>.</p>
+
+		<form onsubmit="return false;" ng-controller="appController">
+
+			<div class="options">
+
+				<h4>Options</h4>
+
+				<fieldset>
+					<input class="pointer" type="checkbox" ng-model="options.urlencode" ng-change="updateBookmarklet(options)"></input>
+					<label class="pointer" for="urlencode">URL-encode reserved characters: [space], %, &quot;, &lt;, &gt;, #, @, &amp;, ?</label>
+				</fieldset>
+
+				<fieldset>
+					<input class="pointer" type="checkbox" ng-model="options.anonymize" ng-change="updateBookmarklet(options)"></input>
+					<label class="pointer" for="anonymize">Isolate within an unnamed function (anonymizing function, IIFE, immediately-invoked function expression).</label>
+				</fieldset>
+
+				<fieldset>
+					<input class="pointer" type="checkbox" ng-model="options.mangleVars" ng-change="updateBookmarklet(options)"></input>
+					<label class="pointer" for="mangle">Minify using <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>.</label>
+				</fieldset>
+
+				<fieldset>
+					<input class="pointer" type="checkbox" ng-model="options.jQuery" ng-change="updateBookmarklet(options)"></input>
+					<label class="pointer" for="reqjq">Make sure jQuery 1.7 or higher is available.</label>
+				</fieldset>
+
+			</div>
+
+			<fieldset id="InputFields">
+				<textarea ng-model="input" ng-change="updateBookmarklet(options)"></textarea>
+			</fieldset>
+
+			<fieldset id="Labels">
+				<label id="InputLabel" for="Input">JavaScript</label>
+				<label id="OutputLabel" for="Output">Bookmarklet</label>
+				<div id="ErrorOutput" ng-show="error">{{ error }}</div>
+			</fieldset>
+
+			<fieldset id="OutputFields">
+				<textarea ng-bind="output" id="Output" wrap="hard" readonly></textarea>
+				<div id="OutputLink" ng-class="output ? '' : 'disabled'">Drag this link to your bookmarks bar: <a id="OutputHref" ng-attr-href="{{ output }}">My Bookmarklet</a></div>
+			</fieldset>
+
+		</form>
+
+		This "bookmarkleter" tool is also known as a jQuery bookmarklet builder, creator, generator, or compiler.
+		
+		<script src="browser-tool.js"></script>
+
+	<div>
+	</body>
+</html>
